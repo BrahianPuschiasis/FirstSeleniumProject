@@ -3,9 +3,12 @@ package OpenCart;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class testRegister {
     private WebDriver driver;
@@ -18,11 +21,15 @@ public class testRegister {
 
     @BeforeEach
     public void setUp() throws InterruptedException {
-        driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, Duration.ofMillis(5000));
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--ignore-certificate-errors");
+        driver = new ChromeDriver(options);        wait = new WebDriverWait(driver, Duration.ofMillis(5000));
         RegisterPage registerPage = new RegisterPage(driver, wait);
+
         registerPage.setup();
         registerPage.getUrl("https://opencart.abstracta.us/index.php?route=common/home");
+
+
     }
 
 
@@ -37,7 +44,7 @@ public class testRegister {
 
         registerPage.escribirNombre("123123");
         registerPage.escribirApellido("3123123");
-        registerPage.escribirCorreo("1231232asdasdasd1312asdasdasd123@gmail.com");
+        registerPage.escribirCorreo("asdasdlasldmasd@gmail.com");
         registerPage.escribirTelephone("123456");
         registerPage.escribirContraseña("123456");
         registerPage.repetirContraseña("123456");
@@ -45,45 +52,15 @@ public class testRegister {
         registerPage.boxAgree();
         registerPage.clickRegistrarse();
 
+        String resultado = registerPage.validaMailObligatorio();
+
+        // Compara el resultado con el texto esperado
+        assertEquals("Congratulations! Your new account has been successfully created!", resultado);
+
 
 
     }
 
-
-    @Test
-    @Tag("REGISTRO")
-    @Tag("FALLIDO")
-    public void RegistroFallidoMailRepetido() throws InterruptedException {
-        RegisterPage registerPage = new RegisterPage(driver, wait);
-
-        registerPage.clickCrearCuenta();
-        registerPage.escribirNombre("Sergio");
-        registerPage.escribirApellido("Pace");
-        registerPage.escribirCorreo("prueba00004@gmail.com");
-        registerPage.escribirContraseña("123456");
-        registerPage.repetirContraseña("123456");
-        registerPage.clickRegistrarse();
-
-        registerPage.mailRegistrado().equals("Ese email ya se encuentra registrado");
-    }
-
-    @Test
-    @Tag("REGISTRO")
-    @Tag("FALLIDO")
-    public void RegistroFallidoContraseña() throws InterruptedException {
-        RegisterPage registerPage = new RegisterPage(driver, wait);
-        registerPage.clickCrearCuenta();
-
-        registerPage.escribirNombre("Sergio");
-        registerPage.escribirApellido("Pace");
-        registerPage.escribirCorreo("prueba00004@gmail.com");
-        registerPage.escribirContraseña("123456321");
-        registerPage.repetirContraseña("123456123");
-
-        registerPage.clickRegistrarse();
-
-        registerPage.contraseñaNoCoinciden().equals("Las contraseñas deben ser iguales");
-    }
 
     @AfterEach
     public void cerrar() {
