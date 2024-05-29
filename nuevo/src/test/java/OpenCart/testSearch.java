@@ -20,19 +20,26 @@ public class testSearch {
         System.out.println("<<< COMIENZAN LOS TEST DE BUSCAR >>>");
     }
 
-
-    @Test
-    @Tag("BUSQUEDA")
-    @Tag("EXITOSA")
-    public void test_BusquedaExitosa() throws InterruptedException {
+    @BeforeEach
+    public void setUp() throws InterruptedException {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--ignore-certificate-errors");
         driver = new ChromeDriver(options);        wait = new WebDriverWait(driver, Duration.ofMillis(5000));
         SearchPage searchPage = new SearchPage(driver, wait);
 
-
         searchPage.setup();
         searchPage.getUrl("https://opencart.abstracta.us/index.php?route=common/home");
+
+
+    }
+
+
+    @Test
+    @Tag("BUSQUEDA")
+    @Tag("EXITOSA")
+    public void test_BusquedaExitosa() throws InterruptedException {
+        SearchPage searchPage = new SearchPage(driver, wait);
+
 
         searchPage.completarBusqueda("iphone");
 

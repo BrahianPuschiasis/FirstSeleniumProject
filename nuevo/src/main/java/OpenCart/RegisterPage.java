@@ -36,12 +36,12 @@ public class RegisterPage extends BasePage{
 
     public void btnRadio() throws InterruptedException {
         this.click(radioNo);
-        Thread.sleep(1000); // Considera reemplazar esto con una espera explícita
+        Thread.sleep(1000);
     }
 
     public void boxAgree() throws InterruptedException {
         this.click(checkboxAgree);
-        Thread.sleep(1000); // Considera reemplazar esto con una espera explícita
+        Thread.sleep(1000);
     }
 
 

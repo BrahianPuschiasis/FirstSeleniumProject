@@ -44,7 +44,7 @@ public class testRegister {
 
         registerPage.escribirNombre("123123");
         registerPage.escribirApellido("3123123");
-        registerPage.escribirCorreo("asdasdlasldmasd@gmail.com");
+        registerPage.escribirCorreo("asdasdlaadfsa213sldmasd@gmail.com");
         registerPage.escribirTelephone("123456");
         registerPage.escribirContraseña("123456");
         registerPage.repetirContraseña("123456");
